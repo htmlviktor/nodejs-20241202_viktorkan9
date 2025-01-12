@@ -8,8 +8,10 @@ import {
 } from "@nestjs/common";
 import * as request from "supertest";
 import { RolesGuard } from "../roles.guard";
+import { Roles } from "../../decorators/roles.decorator";
 
 @Controller("mock")
+@UseGuards(RolesGuard)
 class MockController {
   @Get()
   getMockData() {
@@ -17,7 +19,7 @@ class MockController {
   }
 
   @Post()
-  @UseGuards(RolesGuard)
+  @Roles("admin")
   postMockData() {
     return { message: "POST request successful" };
   }
